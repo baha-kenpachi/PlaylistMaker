@@ -3,8 +3,11 @@
     <dimen name="primary_text_size">22sp</dimen>
     <dimen name="text_in_menu">16sp</dimen>
     <dimen name="sight_padding">16dp</dimen>
+    <dimen name="sight_margin_for_button_in_main_activity">8dp</dimen>
     <dimen name="margin_left_for_text_in_menu">12dp</dimen>
     <dimen name="height_box_in_menu">61dp</dimen>
     <dimen name="square_button">48dp</dimen>
+    <dimen name="button_radius">16dp</dimen>
+    <dimen name="top_menu_space">56dp</dimen>
 
 </resources>
