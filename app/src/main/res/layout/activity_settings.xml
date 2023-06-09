@@ -13,53 +13,54 @@
         android:layout_marginBottom="24dp"
         android:orientation="horizontal">
 
-<!--        <Button-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:fontFamily="@font/ys_display_medium"-->
-<!--            android:insetLeft="0dp"-->
-<!--            android:insetTop="0dp"-->
-<!--            android:insetRight="0dp"-->
-<!--            android:insetBottom="0dp"-->
+        <!--        <Button-->
+        <!--            style="?android:attr/borderlessButtonStyle"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:backgroundTint="@color/white"-->
+        <!--            android:fontFamily="@font/ys_display_medium"-->
+        <!--            android:insetLeft="0dp"-->
+        <!--            android:insetTop="0dp"-->
+        <!--            android:insetRight="0dp"-->
+        <!--            android:insetBottom="0dp"-->
 
-<!--            android:text="@string/settings_name"-->
-<!--            android:textAlignment="viewStart"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textColor="@color/black_text"-->
-<!--            android:textSize="@dimen/primary_text_size"-->
-<!--            app:icon="@drawable/vector"-->
-<!--            app:iconPadding="28dp"-->
-<!--            app:iconTint="@color/black" />-->
-                <Button
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/square_button"
-                    android:layout_height="@dimen/square_button"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/white"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    android:layout_margin="4dp"
-                    app:icon="@drawable/vector"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconTint="@color/black"
-                    />
+        <!--            android:text="@string/settings_name"-->
+        <!--            android:textAlignment="viewStart"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="@color/black_text"-->
+        <!--            android:textSize="@dimen/primary_text_size"-->
+        <!--            app:icon="@drawable/vector"-->
+        <!--            app:iconPadding="28dp"-->
+        <!--            app:iconTint="@color/black" />-->
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:layout_margin="4dp"
+            app:icon="@drawable/vector"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/black"
+            />
 
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="12dp"
-                            android:fontFamily="@font/ys_display_medium"
-                            android:text="@string/settings_name"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/primary_text_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/ys_display_medium"
+            android:text="@string/settings_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/primary_text_size" />
 
     </LinearLayout>
 
@@ -91,24 +92,24 @@
 
         </FrameLayout>
 
-<!--        <Button-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/height_box_in_menu"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:fontFamily="@font/ys_display_regular"-->
-<!--            android:insetLeft="0dp"-->
-<!--            android:insetTop="0dp"-->
-<!--            android:insetRight="0dp"-->
-<!--            android:insetBottom="0dp"-->
-<!--            android:text="@string/share_app"-->
-<!--            android:textAlignment="textStart"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textColor="@color/black_text"-->
-<!--            android:textSize="@dimen/text_in_menu"-->
-<!--            app:icon="@drawable/share"-->
-<!--            app:iconGravity="end"-->
-<!--            app:iconTint="@color/grey" />-->
+        <!--        <Button-->
+        <!--            style="?android:attr/borderlessButtonStyle"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/height_box_in_menu"-->
+        <!--            android:backgroundTint="@color/white"-->
+        <!--            android:fontFamily="@font/ys_display_regular"-->
+        <!--            android:insetLeft="0dp"-->
+        <!--            android:insetTop="0dp"-->
+        <!--            android:insetRight="0dp"-->
+        <!--            android:insetBottom="0dp"-->
+        <!--            android:text="@string/share_app"-->
+        <!--            android:textAlignment="textStart"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="@color/black_text"-->
+        <!--            android:textSize="@dimen/text_in_menu"-->
+        <!--            app:icon="@drawable/share"-->
+        <!--            app:iconGravity="end"-->
+        <!--            app:iconTint="@color/grey" />-->
 
         <LinearLayout
             android:layout_width="match_parent"

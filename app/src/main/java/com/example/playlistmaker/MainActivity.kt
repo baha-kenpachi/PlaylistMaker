@@ -1,11 +1,10 @@
 package com.example.playlistmaker
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -13,21 +12,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val findButton = findViewById<Button>(R.id.find_button)
-
-        val buttonClickListener: View.OnClickListener = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "pressed find button", Toast.LENGTH_LONG).show()
-            }
+        findButton.setOnClickListener {
+            val displayIntent = Intent(this, FindActivity::class.java)
+            startActivity(displayIntent)
         }
-        findButton.setOnClickListener(buttonClickListener)
 
         val mediaLibraryButton = findViewById<Button>(R.id.media_library_button)
         mediaLibraryButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "pressed media library button", Toast.LENGTH_SHORT).show()
+            val displayIntent = Intent(this, MediaLibraryActivity::class.java)
+            startActivity(displayIntent)
         }
         val settingButton = findViewById<Button>(R.id.setting_button)
         settingButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "pressed setting button", Toast.LENGTH_LONG).show()
+            val displayIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(displayIntent)
         }
 
     }
