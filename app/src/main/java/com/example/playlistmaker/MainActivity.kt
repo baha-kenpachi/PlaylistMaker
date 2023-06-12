@@ -1,6 +1,5 @@
 package com.example.playlistmaker
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +25,5 @@ class MainActivity : AppCompatActivity() {
             val displayIntent = Intent(this, SettingsActivity::class.java)
             startActivity(displayIntent)
         }
-
     }
 }
