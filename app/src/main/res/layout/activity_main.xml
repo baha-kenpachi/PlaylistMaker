@@ -25,11 +25,6 @@
             />
 
 
-        <!--android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/sight_padding"
-        android:orientation="vertical">-->
-
         <Button
             android:id="@+id/find_button"
             android:layout_width="match_parent"
