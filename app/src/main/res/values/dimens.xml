@@ -8,6 +8,6 @@
     <dimen name="height_box_in_menu_61dp">61dp</dimen>
     <dimen name="square_button_48dp">48dp</dimen>
     <dimen name="button_radius_16dp">16dp</dimen>
-    <dimen name="top_menu_space_16dp">56dp</dimen>
+    <dimen name="top_menu_space_56dp">56dp</dimen>
 
 </resources>
