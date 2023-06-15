@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="primary_text_size">22sp</dimen>
-    <dimen name="text_in_menu">16sp</dimen>
-    <dimen name="sight_padding">16dp</dimen>
-    <dimen name="sight_margin_for_button_in_main_activity">8dp</dimen>
-    <dimen name="margin_left_for_text_in_menu">12dp</dimen>
-    <dimen name="height_box_in_menu">61dp</dimen>
-    <dimen name="square_button">48dp</dimen>
-    <dimen name="button_radius">16dp</dimen>
-    <dimen name="top_menu_space">56dp</dimen>
+    <dimen name="primary_text_size_22sp">22sp</dimen>
+    <dimen name="text_in_menu_16sp">16sp</dimen>
+    <dimen name="sight_padding_16dp">16dp</dimen>
+    <dimen name="sight_margin_for_button_in_main_activity_8dp">8dp</dimen>
+    <dimen name="margin_left_for_text_in_menu_12dp">12dp</dimen>
+    <dimen name="height_box_in_menu_61dp">61dp</dimen>
+    <dimen name="square_button_48dp">48dp</dimen>
+    <dimen name="button_radius_16dp">16dp</dimen>
+    <dimen name="top_menu_space_56dp">56dp</dimen>
 
 </resources>
