@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toStartOf="@id/title_settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/colorSecondary" />
+        app:tint="?attr/colorOnSecondary" />
 
 
     <TextView style="@style/TextMainTitleScreenStyle"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/title_dark_theme"
         app:layout_constraintTop_toBottomOf="@id/title_settings"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        />
 
     <TextView style="@style/TextInSettingsActivityStyle"
         android:id="@+id/title_share_app"
