@@ -1,2 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <style name="ButtonsInMainActivityStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginTop">@dimen/sight_margin_for_button_in_main_activity_8dp</item>
+        <item name="android:layout_marginBottom">@dimen/sight_margin_for_button_in_main_activity_8dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/yp_black</item>
+        <item name="android:textSize">@dimen/primary_text_size_22sp</item>
+        <item name="cornerRadius">@dimen/button_radius_16dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">10dp</item>
+        <item name="iconTint">@color/black</item>
+    </style>
+    <style name="ButtonsInSettingsActivityStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">@dimen/square_button_48dp</item>
+        <item name="android:layout_height">@dimen/height_box_in_menu_61dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="tint">?attr/colorOnPrimary</item>
+    </style>
+    <style name="TextInSettingsActivityStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/height_box_in_menu_61dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/sight_padding_16dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textSize">@dimen/text_in_menu_16sp</item>
+    </style>
+    <style name="TextMainTitleScreenStyle">
+        <item name="android:layout_height">@dimen/top_menu_space_56dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textSize">@dimen/primary_text_size_22sp</item>
+    </style>
+</resources>
