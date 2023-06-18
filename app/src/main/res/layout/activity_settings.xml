@@ -48,7 +48,10 @@
         app:layout_constraintBottom_toTopOf="@id/button_share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/title_dark_theme"
-        app:layout_constraintTop_toBottomOf="@id/title_settings"/>
+        app:layout_constraintTop_toBottomOf="@id/title_settings"
+        app:trackTint="@drawable/switch_track_selector"
+        app:thumbTint="@drawable/switch_thumb_selector"
+        />
 
 
     <TextView style="@style/TextInSettingsActivityStyle"

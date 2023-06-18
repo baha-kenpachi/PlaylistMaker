@@ -5,6 +5,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -15,6 +17,17 @@ class SettingsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+        val switch = findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switcher_dark_theme)
+        switch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Включена темная тема
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                // Включена светлая тема
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
         val shareButton = findViewById<ImageButton>(R.id.button_share)
         shareButton.setOnClickListener {
             val linkYPAndroidDeveloper = getString(R.string.link_to_yp_android_developer)
