@@ -17,16 +17,7 @@ class SettingsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
-        val switch = findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switcher_dark_theme)
-        switch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // Включена темная тема
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                // Включена светлая тема
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
+
 
         val shareButton = findViewById<ImageButton>(R.id.button_share)
         shareButton.setOnClickListener {
