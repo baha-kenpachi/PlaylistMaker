@@ -2,7 +2,6 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -13,9 +12,14 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 
 class FindActivity : AppCompatActivity() {
+    private lateinit var inputEditText: EditText
+
+    companion object {
+        const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
+    }
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +30,23 @@ class FindActivity : AppCompatActivity() {
             finish()
         }
 
-        val linearLayout = findViewById<LinearLayout>(R.id.container)
-        val inputEditText = findViewById<EditText>(R.id.inputEditText)
+        val linearLayout = findViewById<LinearLayout>(R.id.container) // для него пока ничего не реализовано
+        inputEditText = findViewById(R.id.inputEditText)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
+
+        // Еще один способ вернуть данные
+        /*if (savedInstanceState != null) {
+            val savedText = savedInstanceState.getString(PRODUCT_AMOUNT)
+            inputEditText.setText(savedText)
+        }*/
 
         clearButton.setOnClickListener {
             inputEditText.setText("")
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
         }
+
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -42,12 +54,7 @@ class FindActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrEmpty()) {
-                    linearLayout.setBackgroundColor(getColor(R.color.yp_light_grey))
-                } else {
-                    linearLayout.setBackgroundColor(getColor(R.color.yp_light_grey))
 
-                }
                 clearButton.visibility = clearButtonVisibility(s)
             }
 
@@ -57,6 +64,17 @@ class FindActivity : AppCompatActivity() {
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(PRODUCT_AMOUNT, inputEditText.text.toString())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Вторым параметром мы передаём значение по умолчанию
+        inputEditText.setText(savedInstanceState.getString(PRODUCT_AMOUNT, ""))
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
