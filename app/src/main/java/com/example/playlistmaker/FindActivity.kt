@@ -15,8 +15,11 @@ import android.widget.LinearLayout
 
 class FindActivity : AppCompatActivity() {
     private lateinit var inputEditText: EditText
+    private lateinit var backButton: ImageButton
+    private lateinit var clearButton: ImageView
+    private var savedText : String = ""
 
-    companion object {
+    private companion object {
         const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
     }
 
@@ -25,14 +28,14 @@ class FindActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find)
 
-        val backButton = findViewById<ImageButton>(R.id.back_button)
+        backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener {
             finish()
         }
-
-        val linearLayout = findViewById<LinearLayout>(R.id.container) // для него пока ничего не реализовано
+        // для него пока ничего не реализовано
+        val linearLayout = findViewById<LinearLayout>(R.id.container)
         inputEditText = findViewById(R.id.inputEditText)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        clearButton = findViewById(R.id.clearIcon)
 
         // Еще один способ вернуть данные
         /*if (savedInstanceState != null) {
@@ -68,13 +71,15 @@ class FindActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(PRODUCT_AMOUNT, inputEditText.text.toString())
+        savedText = inputEditText.text.toString()
+        outState.putString(PRODUCT_AMOUNT, savedText)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         // Вторым параметром мы передаём значение по умолчанию
-        inputEditText.setText(savedInstanceState.getString(PRODUCT_AMOUNT, ""))
+        savedText = savedInstanceState.getString(PRODUCT_AMOUNT, "")
+        inputEditText.setText(savedText)
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
