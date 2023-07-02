@@ -43,7 +43,7 @@
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switcher_dark_theme"
         android:layout_width="@dimen/square_button_48dp"
-        android:layout_height="@dimen/height_box_in_menu_61dp"
+        android:layout_height="@dimen/height_box_in_menu_60dp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/button_share"
         app:layout_constraintEnd_toEndOf="parent"

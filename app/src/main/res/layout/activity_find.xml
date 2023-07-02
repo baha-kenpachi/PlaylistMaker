@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorPrimary"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_menu_space_56dp"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -33,7 +33,9 @@
 
     <LinearLayout
         style="@style/ContainerBySearch"
-        android:id="@+id/container">
+        android:id="@+id/container"
+        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="@dimen/sight_padding_16dp">
 
 
         <EditText
@@ -45,7 +47,20 @@
         <ImageView
             style="@style/ClearIconBySearch"
             android:id="@+id/clearIcon"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+            android:src="@drawable/clear_button"
+            android:layout_marginEnd="16dp"/>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTracks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        tools:listitem="@layout/track_view"
+        />
+
+
+
 </LinearLayout>

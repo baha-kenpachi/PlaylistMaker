@@ -20,14 +20,14 @@
     </style>
     <style name="ButtonsInSettingsActivityStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">@dimen/square_button_48dp</item>
-        <item name="android:layout_height">@dimen/height_box_in_menu_61dp</item>
+        <item name="android:layout_height">@dimen/height_box_in_menu_60dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="tint">?attr/colorOnPrimary</item>
     </style>
     <style name="TextInSettingsActivityStyle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/height_box_in_menu_61dp</item>
+        <item name="android:layout_height">@dimen/height_box_in_menu_60dp</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginStart">@dimen/sight_padding_16dp</item>
         <item name="android:layout_weight">1</item>
