@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val findButton = findViewById<Button>(R.id.find_button)
         findButton.setOnClickListener {
-            val displayIntent = Intent(this, FindActivity::class.java)
+            val displayIntent = Intent(this, SearchActivity::class.java)
             startActivity(displayIntent)
         }
 

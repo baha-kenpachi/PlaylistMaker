@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootTrackLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_box_in_menu_60dp">
+
+    <ImageView
+        android:id="@+id/ivTrack"
+        android:layout_width="@dimen/icon_44dp"
+        android:layout_height="@dimen/icon_44dp"
+        android:layout_marginStart="@dimen/sight_padding_16dp"
+        android:layout_marginEnd="@dimen/sight_margin_for_button_in_main_activity_8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/clear_button" />
+
+    <TextView
+        android:id="@+id/tvTrackName"
+        style="@style/TrackText"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="@dimen/sight_margin_for_button_in_main_activity_8dp"
+        android:layout_marginTop="@dimen/margin_13"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/text_in_menu_16sp"
+        app:layout_constraintEnd_toStartOf="@+id/ivButtonForward"
+        app:layout_constraintStart_toEndOf="@+id/ivTrack"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/checking_text" />
+
+
+    <TextView
+        android:id="@+id/tvArtistName"
+        style="@style/TrackText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/sight_14dp"
+        android:layout_marginTop="1dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivDotTrack"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvTrackName"
+        app:layout_constraintTop_toBottomOf="@+id/tvTrackName"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constrainedWidth="true"
+        tools:text="@string/checking_text" />
+
+    <ImageView
+        android:id="@+id/ivDotTrack"
+        android:layout_width="@dimen/sight_14dp"
+        android:layout_height="@dimen/sight_14dp"
+        android:layout_marginTop="1dp"
+        android:src="@drawable/dot_track"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvArtistName"
+        app:layout_constraintTop_toBottomOf="@+id/tvTrackName"
+        app:layout_constraintVertical_bias="0.00" />
+
+    <TextView
+        android:id="@+id/tvTrackTime"
+        style="@style/TrackText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/sight_14dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivButtonForward"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/ivDotTrack"
+        app:layout_constraintTop_toBottomOf="@+id/tvTrackName"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="@string/checking_text" />
+
+
+    <ImageView
+        android:id="@+id/ivButtonForward"
+        android:layout_width="@dimen/icon_24"
+        android:layout_height="@dimen/icon_24"
+        android:layout_marginEnd="@dimen/margin_left_for_text_in_menu_12dp"
+        android:scaleType="center"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+<!--<LinearLayout
+android:id="@+id/llTrackInformation"
+android:layout_width="0dp"
+android:layout_height="@dimen/sight_14dp"
+android:orientation="horizontal"
+android:layout_marginHorizontal="@dimen/sight_margin_for_button_in_main_activity_8dp"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toStartOf="@+id/ivButtonForward"
+app:layout_constraintHorizontal_bias="0.0"
+app:layout_constraintStart_toEndOf="@id/ivTrack"
+app:layout_constraintTop_toBottomOf="@+id/tvTrackName"
+app:layout_constraintVertical_bias="0.0"
+    >
+<TextView
+    android:id="@+id/tvArtistName"
+    style="@style/TrackText"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="@dimen/sight_14dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginEnd="0dp"
+    android:ellipsize="end"
+    android:maxLines="1"
+    tools:text="GOOGLE" />
+
+<ImageView
+    android:id="@+id/ivDotTrack"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/sight_14dp"
+    android:layout_marginTop="1dp"
+    android:src="@drawable/dot_track"
+    />
+
+<TextView
+    android:id="@+id/tvTrackTime"
+    style="@style/TrackText"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/sight_14dp"
+    android:layout_marginTop="1dp"
+    tools:text="@string/checking_text" />
+
+&lt;!&ndash;<TextView
+    style="@style/TrackText"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="@dimen/sight_14dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginEnd="0dp"/>&ndash;&gt;
+
+</LinearLayout>-->
