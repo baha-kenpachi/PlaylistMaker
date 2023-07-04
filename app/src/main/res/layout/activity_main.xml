@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight= "1"
-        android:text="@string/find"
+        android:text="@string/search"
         android:layout_marginTop="24dp"
         app:icon="@drawable/find_vector"
         app:layout_constraintBottom_toTopOf="@id/media_library_button"

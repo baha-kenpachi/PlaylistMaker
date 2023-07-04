@@ -17,7 +17,7 @@ import com.example.playlistmaker.searchertrack.TrackAdapter
 import com.example.playlistmaker.searchertrack.TrackData
 import java.util.Random
 
-class FindActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
     private lateinit var inputEditText: EditText
     private lateinit var backButton: ImageButton
     private lateinit var clearButton: ImageView
@@ -36,7 +36,7 @@ class FindActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_find)
+        setContentView(R.layout.activity_search)
 
         backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener {
@@ -81,7 +81,7 @@ class FindActivity : AppCompatActivity() {
             val randomTrackData = listOf(
                 TrackData(
                     "Smells Like Teen Spirit Spirit Spirit Spirit Spirit",
-                    "Nirvana",
+                    "NirvanaSmells Like Teen Spirit Spirit Spirit Spirit SpiritSmells Like Teen Spirit Spirit Spirit Spirit Spirit",
                     "5:01",
                     "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/7b/58/c2/7b58c21a-2b51-2bb2-e59a-9bb9b96ad8c3/00602567924166.rgb.jpg/100x100bb.jpg"
                 ),
