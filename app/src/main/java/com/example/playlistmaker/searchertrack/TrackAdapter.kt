@@ -1,9 +1,7 @@
 package com.example.playlistmaker.searchertrack
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.R
 
 class TrackAdapter(
     private val data: List<TrackData>

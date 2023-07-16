@@ -1,7 +1,6 @@
 package com.example.playlistmaker.searchertrack
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,13 +14,10 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parentView.context)
         .inflate(R.layout.track_view, parentView, false)
 ) {
-    //private val rootTrackLayout: ConstraintLayout = itemView.findViewById(R.id.rootTrackLayout)
     private val ivTrack : ImageView = itemView.findViewById(R.id.ivTrack)
     private val tvTrackName : TextView = itemView.findViewById(R.id.tvTrackName)
     private val tvArtistName : TextView = itemView.findViewById(R.id.tvArtistName)
-    //private val ivDotTrack : ImageView = itemView.findViewById(R.id.ivDotTrack)
     private val tvTrackTime : TextView = itemView.findViewById(R.id.tvTrackTime)
-    //private val ivButtonForward : ImageView = itemView.findViewById(R.id.ivButtonForward)
 
     fun bind(item:TrackData){
         Glide.with(itemView)
@@ -32,10 +28,9 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
             .transform(RoundedCorners(25))
             .into(ivTrack)
 
-//        ivTrack.setImageResource()
         tvTrackName.text = item.trackName
         tvArtistName.text = item.artistName
-        tvTrackTime.text = item.trackTime
+        tvTrackTime.text = item.trackTimeMillis
 
     }
 }
