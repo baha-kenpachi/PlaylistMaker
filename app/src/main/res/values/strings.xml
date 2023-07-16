@@ -13,6 +13,9 @@
     <string name="letter_text_to_support">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="yp_offer">https://yandex.ru/legal/practicum_offer/</string>
     <string name="checking_text">Any TEXT</string>
+    <string name="nothing_not_found">Ничего не нашлось</string>
+    <string name="not_connection">Проблемы со связью \n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="refresh">Обновить</string>
 
 
 </resources>

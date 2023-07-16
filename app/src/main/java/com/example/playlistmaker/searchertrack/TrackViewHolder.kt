@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 //class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
@@ -28,9 +30,12 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
             .transform(RoundedCorners(25))
             .into(ivTrack)
 
+       val converter =  SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
+        tvTrackTime.text = converter
+
         tvTrackName.text = item.trackName
         tvArtistName.text = item.artistName
-        tvTrackTime.text = item.trackTimeMillis
+
 
     }
 }
