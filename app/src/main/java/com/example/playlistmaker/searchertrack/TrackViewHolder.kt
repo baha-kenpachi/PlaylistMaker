@@ -24,10 +24,10 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
     fun bind(item:TrackData){
         Glide.with(itemView)
             .load(item.artworkUrl100)
-            .placeholder(R.drawable.clear_button)
+            .placeholder(R.drawable.placeholder_not_found)
             //.centerInside()
             .centerCrop()
-            .transform(RoundedCorners(25))
+            .transform(RoundedCorners(2))
             .into(ivTrack)
 
        val converter =  SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
