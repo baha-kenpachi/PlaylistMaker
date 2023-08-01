@@ -1,12 +1,13 @@
 package com.example.playlistmaker
 
+import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -17,6 +18,13 @@ class SettingsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.swm_theme_switcher)
+
+        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+            (applicationContext as App).switchTheme(checked)
+        }
+        themeSwitcher.isChecked = (applicationContext as App).darkTheme
 
 
         val shareButton = findViewById<ImageButton>(R.id.button_share)
@@ -54,5 +62,22 @@ class SettingsActivity : AppCompatActivity() {
                 startActivity(this)
             }
         }
+    }
+}
+
+class App : Application(){
+    var darkTheme = false
+    override fun onCreate() {
+        super.onCreate()
+    }
+    fun switchTheme(darkThemeEnabled : Boolean){
+        darkTheme = darkThemeEnabled
+        AppCompatDelegate.setDefaultNightMode(
+            if (darkThemeEnabled){
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+        )
     }
 }
