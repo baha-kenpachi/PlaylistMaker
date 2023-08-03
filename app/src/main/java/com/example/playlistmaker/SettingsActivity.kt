@@ -1,13 +1,13 @@
 package com.example.playlistmaker
 
-import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatDelegate
+import android.widget.Toast
 import com.google.android.material.switchmaterial.SwitchMaterial
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -20,9 +20,16 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.swm_theme_switcher)
+        val sharedPrefsTheme = getSharedPreferences(THEME_SWITCHER_VALUE, MODE_PRIVATE)
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
             (applicationContext as App).switchTheme(checked)
+            sharedPrefsTheme.edit()
+                .putBoolean(THEME_SWITCHER_KEY, checked)
+                .apply()
+
+            Toast.makeText(this, "Saved theme value ${checked}", Toast.LENGTH_SHORT)
+                .show()
         }
         themeSwitcher.isChecked = (applicationContext as App).darkTheme
 
@@ -65,19 +72,3 @@ class SettingsActivity : AppCompatActivity() {
     }
 }
 
-class App : Application(){
-    var darkTheme = false
-    override fun onCreate() {
-        super.onCreate()
-    }
-    fun switchTheme(darkThemeEnabled : Boolean){
-        darkTheme = darkThemeEnabled
-        AppCompatDelegate.setDefaultNightMode(
-            if (darkThemeEnabled){
-                AppCompatDelegate.MODE_NIGHT_YES
-            } else {
-                AppCompatDelegate.MODE_NIGHT_NO
-            }
-        )
-    }
-}
