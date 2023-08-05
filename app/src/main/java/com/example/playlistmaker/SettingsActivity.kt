@@ -8,8 +8,8 @@ import android.widget.ImageButton
 import android.widget.Toast
 import com.google.android.material.switchmaterial.SwitchMaterial
 
-
 class SettingsActivity : AppCompatActivity() {
+    lateinit var themeSwitcher: SwitchMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,25 +18,17 @@ class SettingsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
-
-        val themeSwitcher = findViewById<SwitchMaterial>(R.id.swm_theme_switcher)
-        val sharedPrefsTheme = getSharedPreferences(THEME_SWITCHER_VALUE, MODE_PRIVATE)
+        themeSwitcher = findViewById<SwitchMaterial>(R.id.swm_theme_switcher)
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
             (applicationContext as App).switchTheme(checked)
-            sharedPrefsTheme.edit()
-                .putBoolean(THEME_SWITCHER_KEY, checked)
-                .apply()
-
-            Toast.makeText(this, "Saved theme value ${checked}", Toast.LENGTH_SHORT)
-                .show()
         }
         themeSwitcher.isChecked = (applicationContext as App).darkTheme
 
-
         val shareButton = findViewById<ImageButton>(R.id.button_share)
         shareButton.setOnClickListener {
-            /* val linkYPAndroidDeveloper = getString(R.string.link_to_yp_android_developer)
+            /* //другой способ реализации share link
+            val linkYPAndroidDeveloper = getString(R.string.link_to_yp_android_developer)
              val shareIntent = Intent(Intent.ACTION_SEND)
              shareIntent.type = "text/plain"
              shareIntent.putExtra(Intent.EXTRA_TEXT, linkYPAndroidDeveloper)
@@ -69,6 +61,18 @@ class SettingsActivity : AppCompatActivity() {
                 startActivity(this)
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val sharedPrefsTheme = getSharedPreferences(THEME_SWITCHER_VALUE, MODE_PRIVATE)
+
+        sharedPrefsTheme.edit()
+            .putBoolean(THEME_SWITCHER_KEY, (applicationContext as App).darkTheme)
+            .apply()
+        Toast.makeText(this, "Saved theme value ${(applicationContext as App).darkTheme}", Toast.LENGTH_SHORT)
+            .show()
     }
 }
 

@@ -10,10 +10,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sharedPrefsTheme = getSharedPreferences(THEME_SWITCHER_VALUE, MODE_PRIVATE)
-        var themeMode = sharedPrefsTheme.getBoolean(THEME_SWITCHER_KEY, false)
-        (applicationContext as App).switchTheme(themeMode)
-
         val findButton = findViewById<Button>(R.id.find_button)
         findButton.setOnClickListener {
             val displayIntent = Intent(this, SearchActivity::class.java)
