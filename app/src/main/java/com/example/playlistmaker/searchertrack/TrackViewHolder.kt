@@ -25,17 +25,13 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
         Glide.with(itemView)
             .load(item.artworkUrl100)
             .placeholder(R.drawable.placeholder_not_found)
-            //.centerInside()
             .centerCrop()
             .transform(RoundedCorners(2))
             .into(ivTrack)
 
        val converter =  SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
         tvTrackTime.text = converter
-
         tvTrackName.text = item.trackName
         tvArtistName.text = item.artistName
-
-
     }
 }

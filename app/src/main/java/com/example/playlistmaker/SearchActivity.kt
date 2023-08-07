@@ -1,6 +1,5 @@
 package com.example.playlistmaker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.searchertrack.RecentSearchHistory
 import com.example.playlistmaker.searchertrack.TrackAdapter
 import com.example.playlistmaker.searchertrack.TrackData
 import com.example.playlistmaker.serchInApi.TracksResponse
@@ -27,6 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.random.Random
 
 class SearchActivity : AppCompatActivity() {
     private val iTunesBaseURL = "https://itunes.apple.com"
@@ -43,36 +44,44 @@ class SearchActivity : AppCompatActivity() {
 
 
     private lateinit var rvTracks: RecyclerView
+    private lateinit var rvRecentSearch: RecyclerView
     private lateinit var trackAdapter: TrackAdapter
+    private lateinit var savedTrackAdapter: TrackAdapter
     private val trackList = ArrayList<TrackData>()
     private lateinit var llNotConnection : LinearLayout
     private lateinit var llNotFound : LinearLayout
     private lateinit var bRefresh : Button
+    private lateinit var bClearHistory : Button
+    private lateinit var llRecentSearch: LinearLayout
+    private lateinit var recentSearchHistory: RecentSearchHistory
+    private var isRecentSearchVisible = true
 
     private companion object {
         const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
     }
 
+    private lateinit var savedTracksList: Array<TrackData>
 
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        val sharedPreferencesSearchHistory = getSharedPreferences(RECENT_SEARCH_VALUE, MODE_PRIVATE)
+        recentSearchHistory = RecentSearchHistory(sharedPreferencesSearchHistory) // Инициализируем экземпляр класса RecentSearchTracks
 
         backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener {
             finish()
         }
         // для него пока ничего не реализовано
-        val linearLayout = findViewById<LinearLayout>(R.id.container)
+        llRecentSearch = findViewById<LinearLayout>(R.id.llRecentSearch)
         inputEditText = findViewById(R.id.inputEditText)
         clearButton = findViewById(R.id.clearIcon)
+        bClearHistory = findViewById(R.id.bClearHistory)
         llNotConnection = findViewById<LinearLayout>(R.id.llNotConnection)
         llNotFound = findViewById<LinearLayout>(R.id.llNotFound)
 
-
-        bRefresh = findViewById<Button>(R.id.bRefresh)
+        bRefresh = findViewById<Button>(R.id.bRefresh) // кнопка становится видимой
         bRefresh.setOnClickListener {
             // Повторно выполняем запрос
             searchRequest()
@@ -84,6 +93,10 @@ class SearchActivity : AppCompatActivity() {
             inputEditText.setText(savedText)
         }*/
 
+        setRecentSearchVisibility(isRecentSearchVisible)
+        Log.d("OnItemClick_LOG", "Status code check llRecentSearch .add(): ${recentSearchHistory.get().isNotEmpty()}")
+        setRecentSearchVisibility(recentSearchHistory.get().isNotEmpty())
+
         clearButton.setOnClickListener {
             inputEditText.setText("")
             val inputMethodManager =
@@ -92,10 +105,14 @@ class SearchActivity : AppCompatActivity() {
 
             trackList.clear()
             trackAdapter.notifyDataSetChanged()
+
+            savedTrackAdapter.notifyDataSetChanged()
+            showRecentSearchTrackList()
+            setRecentSearchVisibility(true) //делаем видимым список недавно проссмотренных
+
             llNotConnection.visibility = View.GONE
             llNotFound.visibility = View.GONE
         }
-
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -124,13 +141,44 @@ class SearchActivity : AppCompatActivity() {
         }
 
         rvTracks = findViewById(R.id.rvTracks)
+        rvRecentSearch = findViewById(R.id.rvRecentSearch)
         rvTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvRecentSearch.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         trackAdapter = TrackAdapter(trackList)
-
         rvTracks.adapter = trackAdapter
 
-    }
+        trackAdapter.itemClickListener = {track: TrackData -> recentSearchHistory.add(track)}
 
+        showRecentSearchTrackList()
+        clearRecentTrack()
+
+        inputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                clearButton.visibility = clearButtonVisibility(s)
+                isRecentSearchVisible = s.isNullOrEmpty()
+                setRecentSearchVisibility(isRecentSearchVisible)
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+    }
+    private fun showRecentSearchTrackList(){
+        savedTracksList = recentSearchHistory.get()
+        val savedTrackList = savedTracksList.toList() // Преобразуем массив в список
+        Log.d("SavedTrackList", "Status code saved track list: ${savedTrackList}")
+        savedTrackAdapter = TrackAdapter(savedTrackList)
+        //savedTrackAdapter = TrackAdapter(trackListData)
+        rvRecentSearch.adapter = savedTrackAdapter
+    }
+    private fun clearRecentTrack(){
+        bClearHistory.setOnClickListener {
+            recentSearchHistory.clear()
+            setRecentSearchVisibility(false)
+        }
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText = inputEditText.text.toString()
@@ -145,6 +193,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
+        val isInputEmpty = s.isNullOrEmpty()
+        setRecentSearchVisibility(isInputEmpty) // проверка ввода и управление видимостью llRecentSearch
+
         return if (s.isNullOrEmpty()) {
             View.GONE
         } else {
@@ -223,4 +274,15 @@ class SearchActivity : AppCompatActivity() {
             llNotConnection.visibility = View.GONE
         }
     }
+    private fun setRecentSearchVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            llRecentSearch.visibility = View.VISIBLE
+        } else {
+            llRecentSearch.visibility = View.GONE
+        }
+    }
+    fun generateRandomNumber(): Int {
+        return Random.nextInt(11)
+    }
+
 }
