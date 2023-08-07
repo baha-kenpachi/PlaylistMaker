@@ -14,8 +14,6 @@ class App : Application() {
     var darkTheme = false
     override fun onCreate() {
         super.onCreate()
-        /*val sharedPreferencesTrack = getSharedPreferences(RECENT_SEARCH_VALUE, MODE_PRIVATE)
-        var recentTrackList = sharedPreferencesTrack.getString(RECENT_SEARCH_KEY, null)*/
         // Получаем экземпляр SharedPreferences, связанный с выбором темы
         val sharedPrefsTheme = getSharedPreferences(THEME_SWITCHER_VALUE, MODE_PRIVATE)
         // Получаем булевое значение выбора темы из SharedPreferences

@@ -11,19 +11,13 @@ class RecentSearchHistory(private val sharedPrefs: SharedPreferences) {
     fun add(track: TrackData) {
         historyList = get().toMutableList()
         val existingIndex = historyList.indexOfFirst { it.trackId == track.trackId }
-
         if (existingIndex != -1) {
             historyList.removeAt(existingIndex)
         }
-
         historyList.add(0, track)
-
         if (historyList.size > 10) {
             historyList.removeLast()
         }
-
-
-        Log.d("OnItemClick_LOG", "Status code RecentSearchTrack .add(): ${historyList}")
         //записали в SharedPreferences
         sharedPrefs.edit()
             .putString(RECENT_SEARCH_KEY, createJsonFromTrackList(historyList))
