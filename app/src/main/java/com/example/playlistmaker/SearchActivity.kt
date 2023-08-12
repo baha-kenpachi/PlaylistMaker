@@ -44,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
 
 
     private lateinit var rvTracks: RecyclerView
-    private lateinit var rvRecentSearch: RecyclerView
+    private lateinit var recentSearchList: RecyclerView
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var savedTrackAdapter: TrackAdapter
     private val trackList = ArrayList<TrackData>()
@@ -52,7 +52,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var llNotFound : LinearLayout
     private lateinit var bRefresh : Button
     private lateinit var bClearHistory : Button
-    private lateinit var llRecentSearch: LinearLayout
+    private lateinit var recentSearchContainer: LinearLayout
     private lateinit var recentSearchHistory: RecentSearchHistory
     private var isRecentSearchVisible = true
 
@@ -74,7 +74,7 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
         // для него пока ничего не реализовано
-        llRecentSearch = findViewById<LinearLayout>(R.id.llRecentSearch)
+        recentSearchContainer = findViewById<LinearLayout>(R.id.llRecentSearch)
         inputEditText = findViewById(R.id.inputEditText)
         clearButton = findViewById(R.id.clearIcon)
         bClearHistory = findViewById(R.id.bClearHistory)
@@ -141,9 +141,9 @@ class SearchActivity : AppCompatActivity() {
         }
 
         rvTracks = findViewById(R.id.rvTracks)
-        rvRecentSearch = findViewById(R.id.rvRecentSearch)
+        recentSearchList = findViewById(R.id.rvRecentSearch)
         rvTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvRecentSearch.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recentSearchList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         trackAdapter = TrackAdapter(trackList)
         rvTracks.adapter = trackAdapter
 
@@ -171,7 +171,7 @@ class SearchActivity : AppCompatActivity() {
         Log.d("SavedTrackList", "Status code saved track list: ${savedTrackList}")
         savedTrackAdapter = TrackAdapter(savedTrackList)
         //savedTrackAdapter = TrackAdapter(trackListData)
-        rvRecentSearch.adapter = savedTrackAdapter
+        recentSearchList.adapter = savedTrackAdapter
     }
     private fun clearRecentTrack(){
         bClearHistory.setOnClickListener {
@@ -276,9 +276,9 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun setRecentSearchVisibility(isVisible: Boolean) {
         if (isVisible) {
-            llRecentSearch.visibility = View.VISIBLE
+            recentSearchContainer.visibility = View.VISIBLE
         } else {
-            llRecentSearch.visibility = View.GONE
+            recentSearchContainer.visibility = View.GONE
         }
     }
     fun generateRandomNumber(): Int {

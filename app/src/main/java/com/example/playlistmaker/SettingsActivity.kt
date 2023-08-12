@@ -40,10 +40,10 @@ class SettingsActivity : AppCompatActivity() {
              startActivity(Intent.createChooser(shareIntent, "Share link"))*/
             Intent(Intent.ACTION_SEND).apply {
                 // Получаем строковое значение ссылки на YP Android Developer из ресурсов
-                val linkYPAndroidDeveloper = getString(R.string.link_to_yp_android_developer)
+                val link = getString(R.string.link_to_yp_android_developer)
                 type = "text/plain"
                 // Добавляем текстовые данные (ссылку) в интент
-                putExtra(Intent.EXTRA_TEXT, linkYPAndroidDeveloper)
+                putExtra(Intent.EXTRA_TEXT, link)
                 // Запускаем активность выбора приложения для поделиться
                 startActivity(Intent.createChooser(this, "Share link"))
             }
