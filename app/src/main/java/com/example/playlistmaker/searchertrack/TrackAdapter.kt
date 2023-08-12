@@ -2,12 +2,38 @@ package com.example.playlistmaker.searchertrack
 
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 class TrackAdapter(
-    private val data: List<TrackData>
+    private var data: List<TrackData>
 ) : RecyclerView.Adapter<TrackViewHolder>() {
     var itemClickListener: ((track: TrackData) -> Unit)? = null
+
+    fun updateItems(newItems: List<TrackData>) {
+        val oldItems = data
+        val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int {
+                return oldItems.size
+            }
+
+            override fun getNewListSize(): Int {
+                return newItems.size
+            }
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldItems[oldItemPosition].trackId == newItems[newItemPosition].trackId
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldItems[oldItemPosition] == newItems[newItemPosition]
+            }
+
+        })
+        data = newItems
+
+        result.dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 //        val view = LayoutInflater.from(parent.context).inflate(R.layout.track_view, parent, false)

@@ -29,7 +29,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.random.Random
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObserver {
     private val iTunesBaseURL = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
             .baseUrl(iTunesBaseURL)
@@ -68,6 +68,7 @@ class SearchActivity : AppCompatActivity() {
 
         val sharedPreferencesSearchHistory = getSharedPreferences(RECENT_SEARCH_VALUE, MODE_PRIVATE)
         recentSearchHistory = RecentSearchHistory(sharedPreferencesSearchHistory) // Инициализируем экземпляр класса RecentSearchTracks
+        recentSearchHistory.onTrackChangeObserver = this
 
         backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener {
@@ -149,8 +150,11 @@ class SearchActivity : AppCompatActivity() {
 
         trackAdapter.itemClickListener = {track: TrackData -> recentSearchHistory.add(track)}
 
+
         showRecentSearchTrackList()
         clearRecentTrack()
+        savedTrackAdapter.itemClickListener = {track: TrackData -> recentSearchHistory.add(track) }
+        //savedTrackAdapter.notifyDataSetChanged()
 
         inputEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -165,6 +169,10 @@ class SearchActivity : AppCompatActivity() {
         })
 
     }
+    override fun onTrackChange(items: MutableList<TrackData>) {
+        savedTrackAdapter.updateItems(items)
+        //showRecentSearchTrackList()
+    }
     private fun showRecentSearchTrackList(){
         savedTracksList = recentSearchHistory.get()
         val savedTrackList = savedTracksList.toList() // Преобразуем массив в список
@@ -172,6 +180,7 @@ class SearchActivity : AppCompatActivity() {
         savedTrackAdapter = TrackAdapter(savedTrackList)
         //savedTrackAdapter = TrackAdapter(trackListData)
         recentSearchList.adapter = savedTrackAdapter
+
     }
     private fun clearRecentTrack(){
         bClearHistory.setOnClickListener {
@@ -284,5 +293,7 @@ class SearchActivity : AppCompatActivity() {
     fun generateRandomNumber(): Int {
         return Random.nextInt(11)
     }
+
+
 
 }
