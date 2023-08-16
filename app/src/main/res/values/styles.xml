@@ -78,4 +78,12 @@
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">@dimen/size_11</item>
     </style>
+
+    <style name="TrackTextDetails">
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/size_13</item>
+    </style>
+
+    <dimen name="size_13">13sp</dimen>
 </resources>

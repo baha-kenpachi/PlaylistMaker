@@ -139,7 +139,7 @@
         android:layout_marginTop="@dimen/sight_margin_24dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvYourRecentSearch"
