@@ -11,14 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/sight_padding_16dp" />
+        app:layout_constraintGuide_percent="0.035" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/sight_padding_16dp" />
+        app:layout_constraintGuide_percent="0.965" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
 
     <ImageButton style="@style/ButtonsInSettingsActivityStyle"
         android:id="@+id/back_button"
@@ -39,19 +46,21 @@
     <ImageView
         android:id="@+id/album_cover"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/sight_padding_8dp"
         android:layout_marginTop="26dp"
+        app:layout_constraintBottom_toTopOf="@id/track_name"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/barrier_after_back_btn"
+        app:layout_constraintDimensionRatio="1:1"
         android:adjustViewBounds="true"
         tools:src="@drawable/placeholder_not_found" />
 
     <TextView
         android:id="@+id/track_name"
         style="@style/TextMainTitleScreenStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/sight_padding_8dp"
         android:layout_marginTop="24dp"
@@ -243,7 +252,12 @@
         app:layout_constraintEnd_toStartOf="@id/country"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/genre_name" />
+        app:layout_constraintTop_toBottomOf="@id/genre_name"
+        app:layout_constraintBottom_toTopOf="@id/guideline_bot"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintVertical_bias="0.0"
+        android:paddingBottom="@dimen/sight_padding_18dp"/>
 
     <TextView
         android:id="@+id/country"
@@ -254,6 +268,11 @@
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/country_name"
         app:layout_constraintTop_toBottomOf="@id/genre"
-        tools:text="England" />
+        app:layout_constraintBottom_toTopOf="@id/guideline_bot"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        tools:text="England"
+        app:layout_constraintVertical_bias="0.0"
+        android:paddingBottom="@dimen/sight_padding_18dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

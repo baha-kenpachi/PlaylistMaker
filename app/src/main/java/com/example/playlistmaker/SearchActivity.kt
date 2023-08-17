@@ -150,6 +150,11 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         savedTrackAdapter.itemClickListener = onClickTrack
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        showAdapter()
+    }
     private fun cleanBtn (){
         clearButton.setOnClickListener {
             inputEditText.setText("")
