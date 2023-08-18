@@ -80,10 +80,10 @@ class SettingsActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        val sharedPrefsTheme = getSharedPreferences(THEME_SWITCHER_VALUE, MODE_PRIVATE)
+        val sharedPrefsTheme = getSharedPreferences(Constants.THEME_SWITCHER_VALUE, MODE_PRIVATE)
 
         sharedPrefsTheme.edit()
-            .putBoolean(THEME_SWITCHER_KEY, (applicationContext as App).darkTheme)
+            .putBoolean(Constants.THEME_SWITCHER_KEY, (applicationContext as App).darkTheme)
             .apply()
         Toast.makeText(
             this,

@@ -55,18 +55,13 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     private lateinit var bClearHistory : Button
     private lateinit var recentSearchContainer: LinearLayout
     private lateinit var recentSearchHistory: RecentSearchHistory
-
-    private companion object {
-        const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
-    }
-
     private lateinit var savedTracksList: Array<TrackData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val sharedPreferencesSearchHistory = getSharedPreferences(RECENT_SEARCH_VALUE, MODE_PRIVATE)
+        val sharedPreferencesSearchHistory = getSharedPreferences(Constants.RECENT_SEARCH_VALUE, MODE_PRIVATE)
         recentSearchHistory = RecentSearchHistory(sharedPreferencesSearchHistory) // Инициализируем экземпляр класса RecentSearchTracks
         recentSearchHistory.onTrackChangeObserver = this
 
@@ -197,13 +192,13 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText = inputEditText.text.toString()
-        outState.putString(PRODUCT_AMOUNT, savedText)
+        outState.putString(Constants.PRODUCT_AMOUNT, savedText)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         // Вторым параметром мы передаём значение по умолчанию
-        savedText = savedInstanceState.getString(PRODUCT_AMOUNT, "")
+        savedText = savedInstanceState.getString(Constants.PRODUCT_AMOUNT, "")
         inputEditText.setText(savedText)
     }
 
