@@ -1,7 +1,6 @@
 package com.example.playlistmaker.searchertrack
 
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
@@ -38,7 +37,7 @@ class TrackAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 //        val view = LayoutInflater.from(parent.context).inflate(R.layout.track_view, parent, false)
 //        return TrackViewHolder(view)
-        return TrackViewHolder(parent)
+        return TrackViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
@@ -46,8 +45,8 @@ class TrackAdapter(
         holder.itemView.setOnClickListener {
             if (itemClickListener != null) itemClickListener?.invoke(data[position])
             //смотрю что сохраняется при нажатии
-            Toast.makeText(holder.itemView.context, "Saved theme values", Toast.LENGTH_SHORT)
-                .show()
+            /*Toast.makeText(holder.itemView.context, "Saved track", Toast.LENGTH_SHORT)
+                .show()*/
         }
     }
 

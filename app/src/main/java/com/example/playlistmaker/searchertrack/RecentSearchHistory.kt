@@ -1,7 +1,7 @@
 package com.example.playlistmaker.searchertrack
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.RECENT_SEARCH_KEY
+import com.example.playlistmaker.Constants
 import com.google.gson.Gson
 
 //этот класс отвечает за вывод 10-ти сохранённых трэков, за добавление сохраненных треков  и за очистку списка
@@ -20,7 +20,7 @@ class RecentSearchHistory(private val sharedPrefs: SharedPreferences) {
         }
         //записали в SharedPreferences
         sharedPrefs.edit()
-            .putString(RECENT_SEARCH_KEY, createJsonFromTrackList(historyList))
+            .putString(Constants.RECENT_SEARCH_KEY, createJsonFromTrackList(historyList))
             .apply()
         onTrackChangeObserver?.onTrackChange(historyList)
     }
@@ -28,7 +28,7 @@ class RecentSearchHistory(private val sharedPrefs: SharedPreferences) {
     fun get(): Array<TrackData> {
         return createTracksFromJson(
             sharedPrefs.getString(
-                RECENT_SEARCH_KEY,
+                Constants.RECENT_SEARCH_KEY,
                 null
             ) ?: return emptyArray()
         )

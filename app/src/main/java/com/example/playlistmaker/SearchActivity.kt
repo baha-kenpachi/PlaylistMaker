@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -54,19 +55,13 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     private lateinit var bClearHistory : Button
     private lateinit var recentSearchContainer: LinearLayout
     private lateinit var recentSearchHistory: RecentSearchHistory
-    private var isRecentSearchVisible = true
-
-    private companion object {
-        const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
-    }
-
     private lateinit var savedTracksList: Array<TrackData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val sharedPreferencesSearchHistory = getSharedPreferences(RECENT_SEARCH_VALUE, MODE_PRIVATE)
+        val sharedPreferencesSearchHistory = getSharedPreferences(Constants.RECENT_SEARCH_VALUE, MODE_PRIVATE)
         recentSearchHistory = RecentSearchHistory(sharedPreferencesSearchHistory) // Инициализируем экземпляр класса RecentSearchTracks
         recentSearchHistory.onTrackChangeObserver = this
 
@@ -94,26 +89,11 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
             inputEditText.setText(savedText)
         }*/
 
-        setRecentSearchVisibility(isRecentSearchVisible)
+        //setRecentSearchVisibility(isRecentSearchVisible)
         Log.d("OnItemClick_LOG", "Status code check llRecentSearch .add(): ${recentSearchHistory.get().isNotEmpty()}")
         setRecentSearchVisibility(recentSearchHistory.get().isNotEmpty())
 
-        clearButton.setOnClickListener {
-            inputEditText.setText("")
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
-
-            trackList.clear()
-            trackAdapter.notifyDataSetChanged()
-
-            savedTrackAdapter.notifyDataSetChanged()
-            showRecentSearchTrackList()
-            setRecentSearchVisibility(true) //делаем видимым список недавно проссмотренных
-
-            llNotConnection.visibility = View.GONE
-            llNotFound.visibility = View.GONE
-        }
+        cleanBtn()
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -121,12 +101,12 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                setRecentSearchVisibility(false)
                 clearButton.visibility = clearButtonVisibility(s)
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // empty
+                setRecentSearchVisibility(false)// empty
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
@@ -148,39 +128,60 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         trackAdapter = TrackAdapter(trackList)
         rvTracks.adapter = trackAdapter
 
-        trackAdapter.itemClickListener = {track: TrackData -> recentSearchHistory.add(track)}
+        val onClickTrack = {track: TrackData ->
+            recentSearchHistory.add(track)
+            savedTrackAdapter.notifyDataSetChanged()
+            val intent = Intent(this, PlayerActivity::class.java)
+            intent.putExtra("trackData", track)
+            startActivity(intent)
+            Toast.makeText(this, "Saved track", Toast.LENGTH_SHORT)
+                .show()
+        }
+        trackAdapter.itemClickListener = onClickTrack
 
 
         showRecentSearchTrackList()
         clearRecentTrack()
-        savedTrackAdapter.itemClickListener = {track: TrackData -> recentSearchHistory.add(track) }
-        //savedTrackAdapter.notifyDataSetChanged()
+        savedTrackAdapter.itemClickListener = onClickTrack
 
-        inputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                clearButton.visibility = clearButtonVisibility(s)
-                isRecentSearchVisible = s.isNullOrEmpty()
-                setRecentSearchVisibility(isRecentSearchVisible)
-            }
+    override fun onResume() {
+        super.onResume()
+        showAdapter()
+    }
+    private fun cleanBtn (){
+        clearButton.setOnClickListener {
+            inputEditText.setText("")
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
 
-            override fun afterTextChanged(s: Editable?) {}
-        })
+            trackList.clear()
+            trackAdapter.notifyDataSetChanged()
 
+            //showRecentSearchTrackList()
+            showAdapter()
+
+            llNotConnection.visibility = View.GONE
+            llNotFound.visibility = View.GONE
+        }
     }
     override fun onTrackChange(items: MutableList<TrackData>) {
         savedTrackAdapter.updateItems(items)
+        //savedTrackAdapter.notifyDataSetChanged()
         //showRecentSearchTrackList()
+    }
+    private fun showAdapter(){
+        recentSearchList.adapter = savedTrackAdapter
+        setRecentSearchVisibility(!savedTracksList.isNullOrEmpty())
     }
     private fun showRecentSearchTrackList(){
         savedTracksList = recentSearchHistory.get()
         val savedTrackList = savedTracksList.toList() // Преобразуем массив в список
         Log.d("SavedTrackList", "Status code saved track list: ${savedTrackList}")
         savedTrackAdapter = TrackAdapter(savedTrackList)
-        //savedTrackAdapter = TrackAdapter(trackListData)
-        recentSearchList.adapter = savedTrackAdapter
-
+        showAdapter()
     }
     private fun clearRecentTrack(){
         bClearHistory.setOnClickListener {
@@ -191,24 +192,31 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText = inputEditText.text.toString()
-        outState.putString(PRODUCT_AMOUNT, savedText)
+        outState.putString(Constants.PRODUCT_AMOUNT, savedText)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         // Вторым параметром мы передаём значение по умолчанию
-        savedText = savedInstanceState.getString(PRODUCT_AMOUNT, "")
+        savedText = savedInstanceState.getString(Constants.PRODUCT_AMOUNT, "")
         inputEditText.setText(savedText)
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
-        val isInputEmpty = s.isNullOrEmpty()
+        val isInputEmpty = savedTracksList.isNullOrEmpty()
         setRecentSearchVisibility(isInputEmpty) // проверка ввода и управление видимостью llRecentSearch
 
         return if (s.isNullOrEmpty()) {
             View.GONE
         } else {
             View.VISIBLE
+        }
+    }
+    private fun setRecentSearchVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            recentSearchContainer.visibility = View.VISIBLE
+        } else {
+            recentSearchContainer.visibility = View.GONE
         }
     }
 
@@ -283,13 +291,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
             llNotConnection.visibility = View.GONE
         }
     }
-    private fun setRecentSearchVisibility(isVisible: Boolean) {
-        if (isVisible) {
-            recentSearchContainer.visibility = View.VISIBLE
-        } else {
-            recentSearchContainer.visibility = View.GONE
-        }
-    }
+
     fun generateRandomNumber(): Int {
         return Random.nextInt(11)
     }

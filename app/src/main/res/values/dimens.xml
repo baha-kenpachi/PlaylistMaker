@@ -19,6 +19,11 @@
     <dimen name="sight_padding_8dp">8dp</dimen>
     <dimen name="sight_margin_24dp">24dp</dimen>
     <dimen name="text_in_menu_19sp">19sp</dimen>
+    <dimen name="sight_padding_18dp">18dp</dimen>
+    <dimen name="sight_margin_30dp">30dp</dimen>
+    <dimen name="margin_54dp">54dp</dimen>
+    <dimen name="btn_52dp">52dp</dimen>
+    <dimen name="margin26dp">26dp</dimen>
 
 
 </resources>
