@@ -50,13 +50,13 @@ class PlayerActivity : AppCompatActivity() {
             .into(binding.albumCover)
 
         binding.timeCounter.text = track.trackTime
-        binding.trackName.text = track.trackName
-        binding.trackAuthor.text = track.artistName
+        binding.trackName.text = track.trackName ?: "-"
+        binding.trackAuthor.text = track.artistName ?: "-"
         binding.duration.text = track.trackTime
         binding.album.text = track.collectionName
-        binding.year.text = track.releaseYear
-        binding.genre.text = track.primaryGenreName
-        binding.country.text = track.country
+        binding.year.text = track.releaseYear  ?: "-"
+        binding.genre.text = track.primaryGenreName  ?: "-"
+        binding.country.text = track.country  ?: "-"
 
     }
 }

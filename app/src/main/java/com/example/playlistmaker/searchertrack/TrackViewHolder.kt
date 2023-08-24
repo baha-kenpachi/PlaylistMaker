@@ -2,33 +2,34 @@ package com.example.playlistmaker.searchertrack
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
+import com.example.playlistmaker.databinding.TrackViewBinding
 
 //class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parentView.context)
-        .inflate(R.layout.track_view, parentView, false)
-) {
-    private val ivTrack : ImageView = itemView.findViewById(R.id.ivTrack)
-    private val tvTrackName : TextView = itemView.findViewById(R.id.tvTrackName)
-    private val tvArtistName : TextView = itemView.findViewById(R.id.tvArtistName)
-    private val tvTrackTime : TextView = itemView.findViewById(R.id.tvTrackTime)
+class TrackViewHolder(private val binding: TrackViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(item: TrackData) {
+        val context = itemView.context
 
-    fun bind(item:TrackData){
-        Glide.with(itemView)
+        Glide.with(context)
             .load(item.artworkUrl100)
             .placeholder(R.drawable.placeholder_not_found)
             .centerCrop()
             .transform(RoundedCorners(2))
-            .into(ivTrack)
+            .into(binding.ivTrack)
 
-        tvTrackTime.text = item.trackTime
-        tvTrackName.text = item.trackName
-        tvArtistName.text = item.artistName
+        binding.tvTrackTime.text = item.trackTime
+        binding.tvTrackName.text = item.trackName ?: "-"
+        binding.tvArtistName.text = item.artistName ?: "-"
+    }
+
+    companion object {
+        fun create(parent: ViewGroup): TrackViewHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            val binding = TrackViewBinding.inflate(inflater, parent, false)
+            return TrackViewHolder(binding)
+        }
     }
 }
