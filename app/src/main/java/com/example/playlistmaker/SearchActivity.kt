@@ -4,17 +4,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,6 +58,18 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     private lateinit var recentSearchContainer: LinearLayout
     private lateinit var recentSearchHistory: RecentSearchHistory
     private lateinit var savedTracksList: Array<TrackData>
+    private lateinit var progressBar : ProgressBar
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+    }
+
+    private var isClickAllowed = true
+
+    private val handler = Handler(Looper.getMainLooper())
+
+    private val searchRunnable = Runnable { searchRequest() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +90,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         bClearHistory = findViewById(R.id.bClearHistory)
         llNotConnection = findViewById<LinearLayout>(R.id.llNotConnection)
         llNotFound = findViewById<LinearLayout>(R.id.llNotFound)
-
+        progressBar = findViewById(R.id.progressBar)
         bRefresh = findViewById<Button>(R.id.bRefresh) // кнопка становится видимой
         bRefresh.setOnClickListener {
             // Повторно выполняем запрос
@@ -103,6 +117,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 setRecentSearchVisibility(false)
                 clearButton.visibility = clearButtonVisibility(s)
+                searchDebounce()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -111,7 +126,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
         //начинаем искать при нажатии поиска на клавиатуре
-        inputEditText.setOnEditorActionListener { _, actionId, _ ->
+        /*inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
                 searchRequest()
@@ -119,7 +134,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
                 true
             }
             false
-        }
+        }*/
 
         rvTracks = findViewById(R.id.rvTracks)
         recentSearchList = findViewById(R.id.rvRecentSearch)
@@ -129,13 +144,15 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         rvTracks.adapter = trackAdapter
 
         val onClickTrack = {track: TrackData ->
-            recentSearchHistory.add(track)
-            savedTrackAdapter.notifyDataSetChanged()
-            val intent = Intent(this, PlayerActivity::class.java)
-            intent.putExtra("trackData", track)
-            startActivity(intent)
-            Toast.makeText(this, "Saved track", Toast.LENGTH_SHORT)
-                .show()
+            if (clickDebounce()) {
+                recentSearchHistory.add(track)
+                savedTrackAdapter.notifyDataSetChanged()
+                val intent = Intent(this, PlayerActivity::class.java)
+                intent.putExtra("trackData", track)
+                startActivity(intent)
+                Toast.makeText(this, "Saved track", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
         trackAdapter.itemClickListener = onClickTrack
 
@@ -150,6 +167,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         super.onResume()
         showAdapter()
     }
+
     private fun cleanBtn (){
         clearButton.setOnClickListener {
             inputEditText.setText("")
@@ -223,13 +241,16 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     private fun searchRequest (){
         val searchText = inputEditText.text.toString()
         if (inputEditText.text.isNotEmpty()) {
+            progressBar.visibility = View.VISIBLE
             iTunesService
                 .search(searchText)
                 .enqueue(object :
                     Callback<TracksResponse> {
                     override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
+                        progressBar.visibility = View.GONE
                         if (response.isSuccessful) {
                             // Запрос успешно выполнен
+
                             trackList.clear()
                             val tracks = response.body()?.results
                             if (tracks?.isNotEmpty() == true) {
@@ -254,6 +275,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
                     }
 
                     override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
+                        progressBar.visibility = View.GONE
                         showMessageNotConnection(getString(R.string.not_connection), t.message.toString())
                     }
 
@@ -290,6 +312,20 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
         } else {
             llNotConnection.visibility = View.GONE
         }
+    }
+
+    private fun clickDebounce() : Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
     fun generateRandomNumber(): Int {
