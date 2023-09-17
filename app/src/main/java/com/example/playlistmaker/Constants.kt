@@ -10,4 +10,10 @@ object Constants {
     //значение и ключ для записи об изменении темы
     const val THEME_SWITCHER_VALUE = "theme_switcher_value"
     const val THEME_SWITCHER_KEY = "theme_switcher_key"
+
+    const val TIME_COUNTER_DELAY = 500L
+    const val STATE_DEFAULT = 0
+    const val STATE_PREPARED = 1
+    const val STATE_PLAYING = 2
+    const val STATE_PAUSED = 3
 }

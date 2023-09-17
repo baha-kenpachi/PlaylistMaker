@@ -97,13 +97,13 @@
         android:layout_marginStart="@dimen/sight_padding_8dp"
         android:layout_marginTop="@dimen/margin_54dp"
         android:src="@drawable/btn_add"
-        app:layout_constraintEnd_toStartOf="@id/player_button_play"
+        app:layout_constraintEnd_toStartOf="@id/player_button_play_or_pause"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/track_author" />
 
     <ImageView
-        android:id="@+id/player_button_play"
+        android:id="@+id/player_button_play_or_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/sight_margin_30dp"
@@ -120,7 +120,7 @@
         android:layout_marginEnd="@dimen/sight_padding_8dp"
         android:src="@drawable/btn_like"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
-        app:layout_constraintStart_toEndOf="@id/player_button_play"
+        app:layout_constraintStart_toEndOf="@id/player_button_play_or_pause"
         app:layout_constraintTop_toBottomOf="@id/track_author" />
 
     <TextView
@@ -131,7 +131,7 @@
         android:textSize="@dimen/text_in_menu_14sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/player_button_play"
+        app:layout_constraintTop_toBottomOf="@id/player_button_play_or_pause"
         tools:text="0:29" />
 
 
