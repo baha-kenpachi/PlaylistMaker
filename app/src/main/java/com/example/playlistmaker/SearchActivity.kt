@@ -105,9 +105,21 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
 
         //setRecentSearchVisibility(isRecentSearchVisible)
         Log.d("OnItemClick_LOG", "Status code check llRecentSearch .add(): ${recentSearchHistory.get().isNotEmpty()}")
-        setRecentSearchVisibility(recentSearchHistory.get().isNotEmpty())
+        //setRecentSearchVisibility(recentSearchHistory.get().isNotEmpty())
 
         cleanBtn()
+
+        rvTracks = findViewById(R.id.rvTracks)
+        recentSearchList = findViewById(R.id.rvRecentSearch)
+        rvTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recentSearchList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        trackAdapter = TrackAdapter(trackList)
+        rvTracks.adapter = trackAdapter
+
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            setRecentSearchVisibility(hasFocus&&inputEditText.text.isEmpty()&&!savedTracksList.isNullOrEmpty())
+
+        }
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -115,13 +127,20 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setRecentSearchVisibility(false)
                 clearButton.visibility = clearButtonVisibility(s)
+                if(s?.isEmpty() == true && inputEditText.hasFocus()){
+                    //rvTracks.visibility = View.GONE
+                    trackList.clear()
+                    trackAdapter = TrackAdapter(trackList)
+                    rvTracks.adapter = trackAdapter
+                    recentSearchContainer.visibility = View.VISIBLE
+                }//else{rvTracks.visibility = View.VISIBLE}
                 searchDebounce()
+
             }
 
             override fun afterTextChanged(s: Editable?) {
-                setRecentSearchVisibility(false)// empty
+                //setRecentSearchVisibility(false)// empty
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
@@ -136,12 +155,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
             false
         }*/
 
-        rvTracks = findViewById(R.id.rvTracks)
-        recentSearchList = findViewById(R.id.rvRecentSearch)
-        rvTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recentSearchList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        trackAdapter = TrackAdapter(trackList)
-        rvTracks.adapter = trackAdapter
+
 
         val onClickTrack = {track: TrackData ->
             if (clickDebounce()) {
@@ -192,7 +206,7 @@ class SearchActivity : AppCompatActivity(), RecentSearchHistory.OnTrackChangeObs
     }
     private fun showAdapter(){
         recentSearchList.adapter = savedTrackAdapter
-        setRecentSearchVisibility(!savedTracksList.isNullOrEmpty())
+        //setRecentSearchVisibility(!savedTracksList.isNullOrEmpty())
     }
     private fun showRecentSearchTrackList(){
         savedTracksList = recentSearchHistory.get()
